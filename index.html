@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="myapp">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Angularの練習</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="myscript.js"></script>
+	<style>
+		.even {
+			background: #ccc;
+		}
+		
+		.odd {
+			background: red;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>AngularJSの練習</h1>
+	<div ng-controller="mainCtrl">
+		<form novalidate name="myForm" ng-submit="addUser()">
+			<p>18+:<input type="checkbox" ng-model="user.adult" ng-true-value="'adult'" ng-false-value="'child'"></p>
+			<p>Phone:
+				<input type="radio" ng-model="user.phone" value="iPhone"> iPhone
+				<input type="radio" ng-model="user.phone" value="Android">Android
+			</p>
+			<p>Memo:
+				<textarea ng-model="user.memo" ng-maxlength="140" maxlength="140"></textarea>{{140-user.memo.length}}
+
+				<p>Color:
+					<select ng-model="user.clor" ng-options="'label:' +color for color in ['red','blue','pink']" ng-init="user.color='red'"></select>
+				</p>
+
+				<p>Name:<input type="text" name="name" ng-model="user.name" required ng-minlength="5" ng-maxlength="8"></p>
+				<span ng-show="myForm.name.$error.required">Required!</span>
+				<span ng-show="myForm.name.$error.minlength">Too short!</span>
+				<span ng-show="myForm.name.$error.maxlength">Too long!</span>
+				<p><input type="submit" value="add"></p>
+
+				<p>Score:<input type="number" name="score" ng-model="user.score"></p>
+				<p>Email:<input type="email" name="email" ng-model="user.email"></p>
+				<span ng-show="myForm.email.$error.email">No valid email</span>
+
+				<p>web:<input type="url" name="url" ng-model="user.url"></p>
+				<span ng-show="myForm.url.$error.url">No valid web url</span>
+
+				<p><input type="submit" value="add"></p>
+		</form>
+		<pre>{{user|json}}</pre>
+	</div>
+	<div ng-controller="MainController">
+		<p>{{users.length}} users.</p>
+		<p>{{25*50|number}}</p>
+		<p>{{25*500|currency:"¥"}}</p>
+		<p>{{today|date:'yyyy-MM-dd'}}</p>
+		<p><input type="text" ng-model="query.name"></p>
+		<ul>
+			<li ng-repeat="user in users" ng-class-even="'even'" ng-class-odd="'odd'" ng-controller="userItemCtrl">
+				{{$index+1}} {{$first}} {{$middle}} {{$last}}{{user.name|uppercase}} {{user.score|number:4}}
+				<button ng-click="increment()">+1</button>
+				<button ng-click="decrement()">-1</button>
+			</li>
+		</ul>
+
+		<input type="text" ng-model="name">
+		<p>こんにちは！{{name}}</p>
+		<p>こんにちは！{{5*3}}</p>
+	</div>
+</body>
+
+</html>
